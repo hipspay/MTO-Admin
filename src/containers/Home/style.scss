@@ -1,0 +1,20 @@
+.home__container {
+    padding: 15px;
+
+    .top__container {
+        .board {
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+            border: 3px solid black;
+            border-style: dotted;
+        }
+    }
+    .body__container {
+        margin-top: 80px;
+        .chart {
+            width: 80% !important;
+            height: 500px !important;
+        }
+    }
+}

@@ -1,0 +1,68 @@
+.agents-table {
+    padding: 15px;
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 10px;
+
+        .search-input {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #414a69;
+            border-radius: 5px;
+            padding: 5px;
+
+            input {
+                border: none;
+                outline: none;
+            }
+        }
+    }
+
+    .table-cell {
+        img {
+            width: 40px;
+            height: 40px;
+        }
+        .bg-blue {
+            background-color: yellow;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        .bg-pink {
+            background-color: pink;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        .bg-green {
+            background-color: rgb(35, 153, 94);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .btn-assgin {
+            background-color: lightgrey;
+            padding: 10px 20px;
+            border-radius: 10px;
+            width: fit-content;
+        }
+    }
+}
+
+.ReactModal__Overlay {
+    z-index: 100;
+    position: relative;
+    .btn-clsoe {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        cursor: pointer;
+    }
+    .ReactModal__Content {
+        inset: 10% !important;
+        padding-top: 55px !important;
+    }
+}

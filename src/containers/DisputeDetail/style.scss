@@ -1,0 +1,173 @@
+.dispute-detail-page {
+    padding: 20px;
+    position: relative;
+    height: 100%;
+
+    .status {
+        display: flex;
+        margin: 10px 0 15px;
+
+        .status-btn {
+            border: 1px solid #414a69;
+            padding: 5px 15px;
+            border-radius: 5px;
+
+            &.init {
+                background-color: lightgray;
+            }
+
+            &.waiting {
+                background-color: lightblue;
+            }
+
+            &.review {
+                background-color: lightyellow;
+            }
+
+            &.fail {
+                background-color: pink;
+            }
+
+            &.win {
+                background-color: lightgreen;
+            }
+        }
+    }
+
+    .btn-adm {
+        background-color: #0665d0;
+        border: 1px solid #0665d0;
+        padding: 10px 20px;
+        border-radius: 10px;
+        width: fit-content;
+        cursor: pointer;
+        color: white;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .btn-cdm {
+        background-color: #0665d0;
+        border: 1px solid #0665d0;
+        padding: 10px 20px;
+        border-radius: 10px;
+        margin-left: 20px;
+        width: fit-content;
+        cursor: pointer;
+        color: white;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .main-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-left: 20px;
+
+        .product-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-right: 50px;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .product-name {
+            p {
+                &:first-child {
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .info {
+            display: block;
+            text-align: center;
+            flex: 1;
+
+            p {
+                margin: 15px 15px;
+            }
+        }
+    }
+
+    .info {
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .info-block {
+            width: 300px;
+            .info-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 15px 0px;
+                margin-right: 50px;
+            }
+        }
+
+        .label {
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .reputation {
+            font-weight: bold;
+            margin-right: 18px;
+            color: #000;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .merchant-info {
+        display: flex;
+        align-items: center;
+
+        svg {
+            margin-right: 15px;
+            font-size: 30px;
+        }
+
+        .merchant-name {
+            color: #5c3998;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    .actions {
+        margin: 30px 0 10px;
+        display: flex;
+        justify-content: center;
+
+        button {
+            text-transform: none;
+        }
+    }
+
+    .overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+}

@@ -1,0 +1,42 @@
+.modal-table-root {
+    padding: 15px;
+
+    .table-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 10px;
+
+        .search-input {
+            padding: 5px 5px;
+            border: 1px solid #414a69;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+
+            svg {
+                margin-right: 5px;
+            }
+
+            input {
+                outline: none;
+                border: 0;
+            }
+        }
+
+        .total-cnt {
+            margin: 0;
+        }
+    }
+
+    .table-container {
+        width: 100%;
+
+        .btn-assgin {
+            background-color: lightgrey;
+            padding: 10px 20px;
+            border-radius: 10px;
+            width: fit-content;
+        }
+    }
+}

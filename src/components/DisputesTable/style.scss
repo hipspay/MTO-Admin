@@ -1,0 +1,70 @@
+.disputes-table {
+    padding: 15px;
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 30px;
+
+        .search-input {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #414a69;
+            border-radius: 5px;
+            padding: 5px;
+
+            input {
+                border: none;
+                outline: none;
+            }
+        }
+    }
+
+    .table-cell {
+        img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .init {
+            background-color: lightgray;
+            padding: 10px 20px;
+            border-radius: 10px;
+            width: fit-content;
+        }
+
+        .waiting {
+            background-color: lightblue;
+            padding: 10px 20px;
+            border-radius: 10px;
+            width: fit-content;
+        }
+
+        .review {
+            background-color: lightyellow;
+            padding: 10px 20px;
+            border-radius: 10px;
+            width: fit-content;
+        }
+
+        .fail {
+            background-color: pink;
+            padding: 10px 20px;
+            border-radius: 10px;
+            width: fit-content;
+        }
+
+        .win {
+            background-color: lightgreen;
+            padding: 10px 20px;
+            border-radius: 10px;
+            width: fit-content;
+        }
+    }
+
+    .MuiTableRow-root {
+        cursor: pointer;
+    }
+}
