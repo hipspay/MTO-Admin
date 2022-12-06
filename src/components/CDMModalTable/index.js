@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
@@ -15,17 +15,15 @@ import {
     TableRow,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
-import { useSnackbar } from 'notistack';
-import escrowABI from '../../constants/escrowABI.json';
+// import { useSnackbar } from 'notistack';
+// import escrowABI from '../../constants/escrowABI.json';
 import './style.scss';
-import NotificationConfig from '../../constants/NotificationConfig';
+// import NotificationConfig from '../../constants/NotificationConfig';
 
 // eslint-disable-next-line object-curly-newline
 const CDMModalTable = ({
     columns,
     agents,
-    setIsLoading,
-    setModalClose,
     disputeData,
 }) => {
     console.log(disputeData);
@@ -33,10 +31,10 @@ const CDMModalTable = ({
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [keyword, setKeyword] = useState('');
     const [rows, setRows] = useState([]);
-    const [escrowContract, setEscrowContract] = useState(null);
+    // const [escrowContract, setEscrowContract] = useState(null);
 
-    const { web3, account, connected } = useSelector((state) => state.web3);
-    const { enqueueSnackbar } = useSnackbar();
+    // const { web3, account, connected } = useSelector((state) => state.web3);
+    // const { enqueueSnackbar } = useSnackbar();
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -47,60 +45,60 @@ const CDMModalTable = ({
         setPage(0);
     };
 
-    useEffect(() => {
-        if (escrowContract) return;
-        if (!connected) return;
+    // useEffect(() => {
+    //     if (escrowContract) return;
+    //     if (!connected) return;
 
-        const EscrowContract = new web3.eth.Contract(
-            escrowABI,
-            process.env.REACT_APP_ESCROW_CONTRACT_ADDRESS
-        );
+    //     const EscrowContract = new web3.eth.Contract(
+    //         escrowABI,
+    //         process.env.REACT_APP_ESCROW_CONTRACT_ADDRESS
+    //     );
 
-        setEscrowContract(EscrowContract);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [web3]);
+    //     setEscrowContract(EscrowContract);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [web3]);
 
     useEffect(() => {
         setRows(agents);
         setPage(0);
     }, [agents, keyword]);
 
-    const showNotification = (msg) => {
-        enqueueSnackbar(msg, {
-            ...NotificationConfig,
-            variant: 'error',
-        });
-    };
+    // const showNotification = (msg) => {
+    //     enqueueSnackbar(msg, {
+    //         ...NotificationConfig,
+    //         variant: 'error',
+    //     });
+    // };
 
-    const onAssignClick = async (agentAddress) => {
-        console.log('agenAddress', agentAddress);
-        try {
-            if (!connected) {
-                showNotification('Please connect wallet to proceed.');
-                return;
-            }
-            setIsLoading(true);
-            await escrowContract.methods
-                .assignAgent(disputeData.id, agentAddress)
-                .send({ from: account });
-            // updateAgentStatus(agentAddress);
-            setIsLoading(false);
-            setModalClose(false);
-        } catch (error) {
-            console.log(error);
-            setIsLoading(false);
-            setModalClose(false);
-        }
-    };
+    // const onAssignClick = async (agentAddress) => {
+    //     console.log('agenAddress', agentAddress);
+    //     try {
+    //         if (!connected) {
+    //             showNotification('Please connect wallet to proceed.');
+    //             return;
+    //         }
+    //         setIsLoading(true);
+    //         await escrowContract.methods
+    //             .assignAgent(disputeData.id, agentAddress)
+    //             .send({ from: account });
+    //         // updateAgentStatus(agentAddress);
+    //         setIsLoading(false);
+    //         setModalClose(false);
+    //     } catch (error) {
+    //         console.log(error);
+    //         setIsLoading(false);
+    //         setModalClose(false);
+    //     }
+    // };
 
-    const renderActionOrValue = (key, value, agentAssingItem) => {
+    const renderActionOrValue = (key, value) => {
         if (key === 'action') {
             return (
                 <div
                     className="btn-assgin"
-                    onClick={() => onAssignClick(agentAssingItem.walletAddress)}
+                    // onClick={() => onAssignClick(agentAssingItem.walletAddress)}
                 >
-                    Assign
+                    Participated
                 </div>
             );
         }
@@ -185,16 +183,16 @@ const CDMModalTable = ({
 CDMModalTable.propTypes = {
     agents: PropTypes.array,
     columns: PropTypes.array,
-    setModalClose: PropTypes.func.isRequired,
+    // setModalClose: PropTypes.func.isRequired,
     disputeData: PropTypes.any,
-    setIsLoading: PropTypes.any,
+    // setIsLoading: PropTypes.any,
 };
 
 CDMModalTable.defaultProps = {
     agents: [],
     columns: [],
     disputeData: {},
-    setIsLoading: false,
+    // setIsLoading: false,
 };
 
 export default CDMModalTable;

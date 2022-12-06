@@ -13,8 +13,9 @@ import {
 } from '@material-ui/core';
 import { Search, Close } from '@material-ui/icons';
 import Modal from 'react-modal';
+import { useSelector } from 'react-redux';
 import AgentModalTable from '../AgentModalTable';
-import { getDisputes } from '../../apis/disputes.api';
+// import { getDisputes } from '../../apis/disputes.api';
 import './style.scss';
 
 const AgentModalTableColumns = [
@@ -71,6 +72,7 @@ const AgentsTable = ({ agents, columns, setIsLoading, updateAgentStatus }) => {
     const [rows, setRows] = useState([]);
     const [modalData, setModalData] = useState([]);
     const [currentAgentAddress, setCurrentAgentAddress] = useState();
+    const bkdDriver = useSelector((state) => state.driverObject.bkdDriver);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -101,7 +103,12 @@ const AgentsTable = ({ agents, columns, setIsLoading, updateAgentStatus }) => {
     React.useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await getDisputes();
+                if (!bkdDriver || !bkdDriver.headers) {
+                    return;
+                }
+
+                const data = await bkdDriver.getDisputes();
+                // const { data } = await getDisputes();
                 console.log('setting modal data', data);
                 setModalData(data);
             } catch (error) {
@@ -109,7 +116,7 @@ const AgentsTable = ({ agents, columns, setIsLoading, updateAgentStatus }) => {
             }
         };
         fetchData();
-    }, []);
+    }, [bkdDriver]);
 
     const getClass = (value) => {
         if (value === 'waiting') {
@@ -189,14 +196,14 @@ const AgentsTable = ({ agents, columns, setIsLoading, updateAgentStatus }) => {
                                     key={agent.id}
                                 >
                                     {columns.map((column, index) => {
-                                        let value = agent[column.key];
-                                        if (column.key === 'status') {
-                                            if (value === 'pending_01') {
-                                                value = 'pending_approved';
-                                            } else if (value === 'pending_01') {
-                                                value = 'pending_disapproved';
-                                            }
-                                        }
+                                        const value = agent[column.key];
+                                        // if (column.key === 'status') {
+                                        //     if (value === 'pending_01') {
+                                        //         value = 'pending_approved';
+                                        //     } else if (value === 'pending_01') {
+                                        //         value = 'pending_disapproved';
+                                        //     }
+                                        // }
                                         return (
                                             <TableCell
                                                 className="table-cell"

@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
+import { connect, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Layout from '../../components/Layout';
 import MerchantTable from '../../components/MerchantTable';
-import { getMerchants } from '../../apis/merchants.api';
+// import { getMerchants } from '../../apis/merchants.api';
 import Spinner from '../../components/Common/Spinner';
 
 import './style.scss';
@@ -36,12 +35,17 @@ function Merchant() {
     const history = useHistory();
     const [isLoading, setIsLoading] = React.useState(false);
     const [merchants, setMerchants] = React.useState([]);
+    const bkdDriver = useSelector((state) => state.driverObject.bkdDriver);
 
     React.useEffect(() => {
         const fetchData = async () => {
             try {
+                if (!bkdDriver || !bkdDriver.headers) {
+                    return;
+                }
+
                 setIsLoading(true);
-                const { data } = await getMerchants();
+                const data = await bkdDriver.merchants();
                 setMerchants(data);
                 setIsLoading(false);
             } catch (error) {
@@ -50,7 +54,7 @@ function Merchant() {
             }
         };
         fetchData();
-    }, []);
+    }, [bkdDriver]);
 
     const showDetail = (id) => {
         history.push(`/merchants/${id}`);

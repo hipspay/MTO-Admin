@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 import {
     Paper,
@@ -15,27 +15,23 @@ import {
     TableRow,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
-import { useSnackbar } from 'notistack';
-import escrowABI from '../../constants/escrowABI.json';
+// import { useSnackbar } from 'notistack';
+// import escrowABI from '../../constants/escrowABI.json';
 import './style.scss';
-import NotificationConfig from '../../constants/NotificationConfig';
+// import NotificationConfig from '../../constants/NotificationConfig';
 
 const AgentModalTable = ({
     assigns,
     columns,
-    setIsLoading,
-    setModalClose,
-    agentAddress,
-    updateAgentStatus,
 }) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [keyword, setKeyword] = useState('');
     const [rows, setRows] = useState([]);
-    const [escrowContract, setEscrowContract] = useState(null);
+    // const [escrowContract, setEscrowContract] = useState(null);
 
-    const { web3, account, connected } = useSelector((state) => state.web3);
-    const { enqueueSnackbar } = useSnackbar();
+    // const { web3, connected } = useSelector((state) => state.web3);
+    // const { enqueueSnackbar } = useSnackbar();
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -46,49 +42,49 @@ const AgentModalTable = ({
         setPage(0);
     };
 
-    useEffect(() => {
-        if (escrowContract) return;
-        if (!connected) return;
+    // useEffect(() => {
+    //     if (escrowContract) return;
+    //     if (!connected) return;
 
-        const EscrowContract = new web3.eth.Contract(
-            escrowABI,
-            process.env.REACT_APP_ESCROW_CONTRACT_ADDRESS
-        );
+    //     const EscrowContract = new web3.eth.Contract(
+    //         escrowABI,
+    //         process.env.REACT_APP_ESCROW_CONTRACT_ADDRESS
+    //     );
 
-        setEscrowContract(EscrowContract);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [web3]);
+    //     setEscrowContract(EscrowContract);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [web3]);
 
     useEffect(() => {
         setRows(assigns);
         setPage(0);
     }, [assigns, keyword]);
 
-    const showNotification = (msg) => {
-        enqueueSnackbar(msg, {
-            ...NotificationConfig,
-            variant: 'error',
-        });
-    };
+    // const showNotification = (msg) => {
+    //     enqueueSnackbar(msg, {
+    //         ...NotificationConfig,
+    //         variant: 'error',
+    //     });
+    // };
 
-    const onAssignClick = async (id) => {
-        try {
-            if (!connected) {
-                showNotification('Please connect wallet to proceed.');
-                return;
-            }
-            setIsLoading(true);
-            await escrowContract.methods
-                .assignAgent(id, agentAddress)
-                .send({ from: account });
-            updateAgentStatus(agentAddress);
-            setIsLoading(false);
-            setModalClose(false);
-        } catch (error) {
-            console.log(error);
-            setModalClose(false);
-        }
-    };
+    // const onAssignClick = async (id) => {
+    //     try {
+    //         if (!connected) {
+    //             showNotification('Please connect wallet to proceed.');
+    //             return;
+    //         }
+    //         setIsLoading(true);
+    //         await escrowContract.methods
+    //             .assignAgent(id, agentAddress)
+    //             .send({ from: account });
+    //         updateAgentStatus(agentAddress);
+    //         setIsLoading(false);
+    //         setModalClose(false);
+    //     } catch (error) {
+    //         console.log(error);
+    //         setModalClose(false);
+    //     }
+    // };
 
     const renderActionOrValue = (key, value, agentAssingItem) => {
         if (key === 'action') {
@@ -99,9 +95,9 @@ const AgentModalTable = ({
                 return (
                     <div
                         className="btn-assgin"
-                        onClick={() => onAssignClick(agentAssingItem.disputeId)}
+                        // onClick={() => onAssignClick(agentAssingItem.disputeId)}
                     >
-                        Assign
+                        Participated
                     </div>
                 );
             }
@@ -192,10 +188,10 @@ const AgentModalTable = ({
 AgentModalTable.propTypes = {
     assigns: PropTypes.array,
     columns: PropTypes.array,
-    setIsLoading: PropTypes.func.isRequired,
-    setModalClose: PropTypes.func.isRequired,
-    agentAddress: PropTypes.string.isRequired,
-    updateAgentStatus: PropTypes.func.isRequired,
+    // setIsLoading: PropTypes.func.isRequired,
+    // setModalClose: PropTypes.func.isRequired,
+    // agentAddress: PropTypes.string.isRequired,
+    // updateAgentStatus: PropTypes.func.isRequired,
 };
 
 AgentModalTable.defaultProps = {

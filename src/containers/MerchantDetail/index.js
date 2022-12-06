@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { getMerchant, getMerchantProducts } from 'apis/merchants.api';
+import { useSelector } from 'react-redux';
+// import { getMerchant, getMerchantProducts } from 'apis/merchants.api';
 import ProductsTable from '../../components/ProductsTable';
 import Layout from '../../components/Layout';
 import Spinner from '../../components/Common/Spinner';
@@ -39,18 +40,23 @@ const MerchantDetail = () => {
     const history = useHistory();
     const [merchant, setMerchant] = useState(null);
     const [products, setProducts] = useState([]);
-
     const [isLoading, setIsLoading] = useState(false);
+    const bkdDriver = useSelector((state) => state.driverObject.bkdDriver);
 
     useEffect(() => {
         if (!history.location.pathname.split('/merchants/')[1]) return;
         const fetchData = async () => {
             try {
+                if (!bkdDriver || !bkdDriver.headers) {
+                    return;
+                }
+
                 setIsLoading(true);
                 const disputeId = history.location.pathname.split('/merchants/')[1];
-                const { data } = await getMerchant(disputeId);
+                const data = await bkdDriver.merchant(disputeId);
                 setMerchant(data);
-                const { data: tempProducts } = await getMerchantProducts(
+
+                const tempProducts = await bkdDriver.getProductsByMerchantId(
                     data.id
                 );
                 setProducts(tempProducts);
@@ -76,7 +82,7 @@ const MerchantDetail = () => {
                     <div className="main-info">
                         <div className="merchant-image">
                             <img
-                                src={`/images/products/${merchant.image}`}
+                                src={merchant.image}
                                 alt=""
                             />
                         </div>
@@ -86,7 +92,7 @@ const MerchantDetail = () => {
                             <div className="d-flex">
                                 <p>
                                     <strong>Products: </strong>
-                                    {products.length}
+                                    {products?.length}
                                 </p>
                                 <div
                                     className="info"

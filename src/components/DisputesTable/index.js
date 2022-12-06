@@ -13,6 +13,7 @@ import {
     TableRow,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
+import './style.scss';
 
 // import { disputeStatus } from '../../constants';
 

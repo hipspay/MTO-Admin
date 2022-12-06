@@ -1,9 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 import utils from '../../utils';
 import Layout from '../../components/Layout';
 import DisputesTable from '../../components/DisputesTable';
-import { getDisputes } from '../../apis/disputes.api';
+// import { getDisputes } from '../../apis/disputes.api';
 import './style.scss';
 
 const DisputesColumns = [
@@ -56,14 +57,19 @@ const DisputesColumns = [
 const DisputesPage = () => {
     const history = useHistory();
     const [disputes, setDisputes] = React.useState([]);
-
+    const bkdDriver = useSelector((state) => state.driverObject.bkdDriver);
     const showDetail = (id) => {
         history.push(`/disputes/${id}`);
     };
 
     React.useEffect(() => {
         const fetchData = async () => {
-            const { data } = await getDisputes();
+            if (!bkdDriver || !bkdDriver.headers) {
+                return;
+            }
+
+            const data = await bkdDriver.getDisputes();
+            // const { data } = await getDisputes();
             data.forEach((dispute) => {
                 const { days, hours } = utils.getWaitingTime(dispute.createdAt);
                 dispute.waitingFor = `${days} days ${hours} hours`;

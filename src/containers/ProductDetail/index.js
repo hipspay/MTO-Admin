@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 import { Person } from '@material-ui/icons';
 
-import { getProduct } from 'apis/products.api';
+// import { getProduct } from 'apis/products.api';
 import Layout from '../../components/Layout';
 
 import './style.scss';
@@ -13,14 +14,18 @@ const ProductDetailPage = () => {
     const history = useHistory();
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const bkdDriver = useSelector((state) => state.driverObject.bkdDriver);
 
     useEffect(() => {
         if (!history.location.pathname.split('/products/')[1]) return;
         const fetchData = async () => {
             try {
+                if (!bkdDriver || !bkdDriver.headers) {
+                    return;
+                }
                 setIsLoading(true);
                 const productId = history.location.pathname.split('/products/')[1];
-                const { data } = await getProduct(productId);
+                const data = await bkdDriver.getProductById(productId);
                 setData(data);
                 setIsLoading(false);
             } catch (error) {

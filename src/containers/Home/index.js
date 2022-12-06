@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import Grid from '@material-ui/core/Grid';
+import { useSelector } from 'react-redux';
 import Layout from '../../components/Layout';
-import { getStats } from '../../apis/admin.api';
+// import { getStats } from '../../apis/admin.api';
 import './style.scss';
+
 // import Spinner from '../../components/Common/Spinner';
 
 const Home = () => {
@@ -13,17 +15,22 @@ const Home = () => {
         disputes: 0,
         products: 0,
     });
+    const bkdDriver = useSelector((state) => state.driverObject.bkdDriver);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await getStats();
+                if (!bkdDriver || !bkdDriver.headers) {
+                    return;
+                }
+                const data = await bkdDriver.getStats();
                 setStats(data);
             } catch (error) {
                 console.log(error);
             }
         };
         fetchData();
-    }, []);
+    }, [bkdDriver]);
 
     const areaData = {
         labels: ['2013', '2014', '2015', '2016', '2017'],

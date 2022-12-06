@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 import { Person } from '@material-ui/icons';
 import Layout from '../../components/Layout';
-import { getOrder } from '../../apis/orders.api';
+// import { getOrder } from '../../apis/orders.api';
 import './style.scss';
 import Spinner from '../../components/Common/Spinner';
 
@@ -10,14 +11,20 @@ const OrderDetail = () => {
     const history = useHistory();
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const bkdDriver = useSelector((state) => state.driverObject.bkdDriver);
 
     useEffect(() => {
         if (!history.location.pathname.split('/orders/')[1]) return;
         const fetchData = async () => {
             try {
+                if (!bkdDriver || !bkdDriver.headers) {
+                    return;
+                }
+
                 setIsLoading(true);
                 const orderId = history.location.pathname.split('/orders/')[1];
-                const { data } = await getOrder(orderId);
+
+                const data = await bkdDriver.getOrderById(orderId);
                 setData(data);
                 // const { data: tempProducts } = await getMerchantProducts(
                 //     data.id

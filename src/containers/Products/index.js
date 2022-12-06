@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-
+import { connect, useSelector } from 'react-redux';
 import Layout from '../../components/Layout';
 import ProductsTable from '../../components/ProductsTable';
-import { getProducts } from '../../apis/products.api';
+// import { getProducts } from '../../apis/products.api';
 import Spinner from '../../components/Common/Spinner';
 
 import './style.scss';
@@ -41,16 +40,20 @@ function ProductsPage() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [products, setProducts] = React.useState([]);
     const [totalProduct, setTotalProducts] = React.useState(0);
-
+    const bkdDriver = useSelector((state) => state.driverObject.bkdDriver);
     React.useEffect(() => {
         const fetchData = async () => {
             try {
+                if (!bkdDriver || !bkdDriver.headers) {
+                    return;
+                }
                 setIsLoading(true);
-                const {
-                    data: { totalCount, products },
-                } = await getProducts();
-                setProducts(products);
-                setTotalProducts(totalCount);
+                const data = await bkdDriver.getProducts();
+                // const {
+                //     data: { totalCount, products },
+                // } = await getProducts();
+                setProducts(data?.products);
+                setTotalProducts(data?.totalCount);
                 setIsLoading(false);
             } catch (error) {
                 console.log(error);
@@ -58,7 +61,7 @@ function ProductsPage() {
             }
         };
         fetchData();
-    }, []);
+    }, [bkdDriver]);
 
     const showDetail = (id) => {
         history.push(`/products/${id}`);
